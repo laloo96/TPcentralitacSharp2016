@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace CentralitaHerencia
 {
-    class Franja
+    public class Franja
     {
+       public enum eFranja
+        {
+            Franja_1=0,Franja_2=1,Franja_3=2
+        }
     }
 }

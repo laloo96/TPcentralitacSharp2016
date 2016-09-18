@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CentralitaHerencia
 {
-    class TipoLlamada
+    public class TipoLlamada
     {
+        public enum tipoLlamada { Local, Provincial,Todas}
     }
 }

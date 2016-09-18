@@ -6,7 +6,57 @@ using System.Threading.Tasks;
 
 namespace CentralitaHerencia
 {
-    class Llamada
+    public class Llamada
     {
+        protected float _duracion;
+        protected string _nroDestino;
+        protected string _nroOrigen;
+
+        public Llamada(float duracion,string origen,string destino)
+        {
+            this._duracion = duracion;
+            this._nroDestino = destino;
+            this._nroOrigen = origen;
+        }
+
+        public float duracion
+        {
+            get
+            {
+            return this._duracion;
+            }
+        }
+
+        public string nroDestino
+        {
+            get
+            {
+                return this._nroDestino;
+            }
+        }
+
+        public string nroOrigen
+        {
+            get
+            {
+                return this._nroOrigen;
+            }
+        }
+
+        public int OrdenarPorDuracion(Llamada firstCall, Llamada secondCall)
+        {
+            return string.Compare(firstCall.duracion.ToString(), secondCall.duracion.ToString());
+        }
+
+        public void Mostrar()
+        {
+            StringBuilder str = new StringBuilder();
+
+            str.Append("Duracion: "+this.duracion.ToString());
+            str.Append(" Nro.Origen: " + this.nroOrigen.ToString());
+            str.Append(" Nro.Destino: " + this.nroDestino.ToString());
+
+            str.ToString();
+        }
     }
 }
