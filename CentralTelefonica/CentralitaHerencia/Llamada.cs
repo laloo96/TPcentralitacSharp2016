@@ -43,12 +43,12 @@ namespace CentralitaHerencia
             }
         }
 
-        public int OrdenarPorDuracion(Llamada firstCall, Llamada secondCall)
+        public static int OrdenarPorDuracion(Llamada firstCall, Llamada secondCall)
         {
             return string.Compare(firstCall.duracion.ToString(), secondCall.duracion.ToString());
         }
 
-        public void Mostrar()
+        public string Mostrar()
         {
             StringBuilder str = new StringBuilder();
 
@@ -56,7 +56,7 @@ namespace CentralitaHerencia
             str.Append(" Nro.Origen: " + this.nroOrigen.ToString());
             str.Append(" Nro.Destino: " + this.nroDestino.ToString());
 
-            str.ToString();
+            return str.ToString();
         }
     }
 }
