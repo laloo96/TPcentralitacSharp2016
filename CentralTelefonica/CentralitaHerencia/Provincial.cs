@@ -24,34 +24,34 @@ namespace CentralitaHerencia
         {
             get
             {
-                return this.costoLlamada;
+                return this.CalcularCosto();
             }
         }
 
         private float CalcularCosto()
         {
-            switch ((int)this._franjaHoraria)
+            switch (this._franjaHoraria)
             {
-                case 1:
+                case eFranja.Franja_1:
                     return (this.duracion) * (float)0.99;
-                case 2:
+                case eFranja.Franja_2:
                     return (this.duracion) * (float)1.25;
-                case 3:
+                case eFranja.Franja_3:
                     return (this.duracion) * (float)0.66;
                 default:
                     return 0;
             }
         }
 
-        public string Mostrar()
+        public new string Mostrar()
         {
             StringBuilder str = new StringBuilder();
 
-            str.Append("Duracion: " + this.duracion.ToString());
-            str.Append(" Nro.Origen: " + this.nroOrigen.ToString());
-            str.Append(" Nro.Destino: " + this.nroDestino.ToString());
-            str.Append(" Costo Llamada: " + this.costoLlamada.ToString());
-            str.Append(" FranjaHoraria: " + this._franjaHoraria.ToString());
+            str.Append("Dur:" + this.duracion.ToString());
+            str.Append(" Origen:" + this.nroOrigen.ToString());
+            str.Append(" Destino:" + this.nroDestino.ToString());
+            str.Append(" Franja:" + this._franjaHoraria.ToString());
+            str.Append(" Costo:$" + this.costoLlamada);
 
             return str.ToString();
         }

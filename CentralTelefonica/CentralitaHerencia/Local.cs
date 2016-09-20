@@ -30,14 +30,16 @@ namespace CentralitaHerencia
             }
         }
 
-        public string Mostrar()
+        public new string Mostrar()
         {
             StringBuilder str = new StringBuilder();
 
-            str.Append("Duracion: " + this.duracion.ToString());
-            str.Append(" Nro.Origen: " + this.nroOrigen.ToString());
-            str.Append(" Nro.Destino: " + this.nroDestino.ToString());
-            str.Append(" Costo Llamada: " + this.CostoLlamada.ToString());
+            str.Append("Dura: " + this.duracion.ToString());
+            str.Append(" Origen:" + this.nroOrigen.ToString());
+            str.Append(" Destino:" + this.nroDestino.ToString());
+            str.Append(" Cargo:" + this._costo);
+            str.Append(" Costo:$" + this.CostoLlamada);
+
 
             return str.ToString();
         }

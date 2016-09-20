@@ -10,7 +10,7 @@ namespace CentralitaHerencia
     {
         static void Main()
         {
-            Centralita telefonica = new Centralita();
+            Centralita telefonica = new Centralita("Telefonica SA");
 
             Local unaLocal = new Local("Chaco", 30, "SanJuan", (float)2.65);
 
@@ -19,11 +19,13 @@ namespace CentralitaHerencia
             Local dosLocal = new Local("Areco", 45, "Cataratas", (float)1.99);
 
             Provincial dosProvincial = new Provincial((eFranja)3, unaProvincial);
+            
 
-            telefonica.Llamada.Add(unaLocal);
-            telefonica.Llamada.Add(unaProvincial);
-            telefonica.Llamada.Add(dosLocal);
-            telefonica.Llamada.Add(dosProvincial);
+
+            telefonica.Llamadas.Add(unaLocal);
+            telefonica.Llamadas.Add(unaProvincial);
+            telefonica.Llamadas.Add(dosLocal);
+            telefonica.Llamadas.Add(dosProvincial);
 
             Console.WriteLine(telefonica.Mostrar());
 
@@ -32,10 +34,10 @@ namespace CentralitaHerencia
             Local tresLocal = new Local("Santiago", 50, "Rusia", (float)6.3);
             Provincial tresProvincial = new Provincial("Ecuador", (eFranja)2, 15, "Sao Pablo");
 
-            telefonica.Llamada.Add(tresLocal);
-            telefonica.Llamada.Add(tresProvincial);
+            telefonica.Llamadas.Add(tresLocal);
+            telefonica.Llamadas.Add(tresProvincial);
 
-            telefonica.OrdenarLlamadas();
+            
             Console.WriteLine(telefonica.Mostrar());
 
             Console.ReadKey();
