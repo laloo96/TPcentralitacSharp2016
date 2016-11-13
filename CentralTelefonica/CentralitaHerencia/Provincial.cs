@@ -10,7 +10,6 @@ namespace CentralitaHerencia
     {
         protected eFranja _franjaHoraria;
 
-
         public Provincial(string origen, eFranja miFranja, float duracion, string destino)
             :base(duracion,origen,destino)
         {
@@ -20,12 +19,29 @@ namespace CentralitaHerencia
         public Provincial(eFranja miFranja, Llamada unaLlamada) : this(unaLlamada.nroOrigen, (eFranja)miFranja, unaLlamada.duracion, unaLlamada.nroDestino)
         { }
 
-        public float costoLlamada
+        public override float CostoLlamada
         {
             get
             {
                 return this.CalcularCosto();
             }
+        }
+        /// <summary>
+        /// Determina si el obj es de l mismo tipo que la instancia actual.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            return obj.GetType() == typeof(Provincial);
+        }
+        /// <summary>
+        /// Hace publicos los datos de la llamada provincial.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return this.Mostrar();
         }
 
         private float CalcularCosto()
@@ -43,15 +59,13 @@ namespace CentralitaHerencia
             }
         }
 
-        public new string Mostrar()
+        protected override string Mostrar()
         {
             StringBuilder str = new StringBuilder();
 
-            str.Append("Dur:" + this.duracion.ToString());
-            str.Append(" Origen:" + this.nroOrigen.ToString());
-            str.Append(" Destino:" + this.nroDestino.ToString());
+            str.AppendLine(base.Mostrar());
             str.Append(" Franja:" + this._franjaHoraria.ToString());
-            str.Append(" Costo:$" + this.costoLlamada);
+            str.Append(" Costo:$" + this.CostoLlamada);
 
             return str.ToString();
         }

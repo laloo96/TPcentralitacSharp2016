@@ -55,7 +55,45 @@ namespace CentralitaHerencia
         }
         #endregion
 
-        public string Mostrar()
+
+        public static bool operator ==(Centralita central, Llamada nuevaLlamada)
+        {
+            bool contiene = false;
+
+            foreach (Llamada item in central.Llamadas)
+            {
+                if (item == nuevaLlamada)
+                {
+                    contiene = true;
+                }
+            }
+
+            return contiene;
+        }
+
+        public static bool operator !=(Centralita central, Llamada nuevaLlamada)
+        {
+            return !(central == nuevaLlamada);
+        }
+
+        public static Centralita operator+(Centralita central, Llamada nuevaLlamada)
+        {
+            if (!(central == nuevaLlamada))
+            {
+                central.AgregarLlamada(nuevaLlamada);
+            }
+            else
+                Console.WriteLine("Esta llamada se ha registrado.");
+
+            return central;
+        }
+
+        public override string ToString()
+        {
+            return this.Mostrar();
+        }
+
+        private string Mostrar()
         {
             Local loc;
             Provincial prov;
@@ -73,12 +111,12 @@ namespace CentralitaHerencia
                 if (item.GetType() == typeof(Local))
                 {
                     loc = (Local)item;
-                    str.AppendLine(loc.Mostrar());
+                    str.AppendLine(loc.ToString());
                 }
                 if (item.GetType() == typeof(Provincial))
                 {
                     prov = (Provincial)item;
-                    str.AppendLine(prov.Mostrar());
+                    str.AppendLine(prov.ToString());
                 }               
             }
 
@@ -110,7 +148,7 @@ namespace CentralitaHerencia
                         if (item.GetType() == typeof(Provincial))
                         {
                             auxProvincial = (Provincial)item;
-                            ganancia += auxProvincial.costoLlamada;
+                            ganancia += auxProvincial.CostoLlamada;
                         }
                     }
                     break;
@@ -128,12 +166,17 @@ namespace CentralitaHerencia
                         if (item.GetType() == typeof(Provincial))
                         {
                             auxProvincial = (Provincial)item;
-                            ganancia += auxProvincial.costoLlamada;
+                            ganancia += auxProvincial.CostoLlamada;
                         }
                     }
                     break;
             }               
             return ganancia;
+        }
+
+        private void AgregarLlamada(Llamada call)
+        {
+            this._listaDeLlamadas.Add(call);
         }
 
         public void OrdenarLlamadas()

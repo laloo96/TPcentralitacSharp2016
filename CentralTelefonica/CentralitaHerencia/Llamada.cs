@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CentralitaHerencia
 {
-    public class Llamada
+    public abstract class Llamada
     {
         protected float _duracion;
         protected string _nroDestino;
@@ -43,12 +43,41 @@ namespace CentralitaHerencia
             }
         }
 
+        public abstract float CostoLlamada { get; }
+
+
+        public static bool operator ==(Llamada l1, Llamada l2)
+        {
+            if (l1.nroDestino == l2.nroDestino && l1.nroOrigen == l2.nroOrigen)
+            {
+                if (l1.GetType() == typeof(Provincial))
+                {
+                    return ((Provincial)l1).Equals(l2);
+                }
+                else if (l2.GetType() == typeof(Local))
+                {
+                    return ((Local)l1).Equals(l2);
+                }
+                else
+                   return false;
+               
+            }
+            else
+                return false;
+        }
+
+        public static bool operator !=(Llamada l1, Llamada l2)
+        {
+            return !(l1 == l2);
+        }
+
+
         public static int OrdenarPorDuracion(Llamada firstCall, Llamada secondCall)
         {
             return string.Compare(firstCall.duracion.ToString(), secondCall.duracion.ToString());
         }
 
-        public string Mostrar()
+        protected virtual string Mostrar()
         {
             StringBuilder str = new StringBuilder();
 
@@ -58,5 +87,6 @@ namespace CentralitaHerencia
 
             return str.ToString();
         }
+
     }
 }

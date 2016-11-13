@@ -22,21 +22,36 @@ namespace CentralitaHerencia
 
         }
 
-        public float CostoLlamada
+        public override float CostoLlamada
         {
             get
             {
                 return this.CalcularCosto();
             }
         }
+        /// <summary>
+        /// Determina si el objeto pasado es del tipo local.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {          
+            return obj.GetType() == typeof(Local);
+        }
+        /// <summary>
+        /// Haace publicos los datos de la llamada local.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return this.Mostrar();
+        }
 
-        public new string Mostrar()
+        protected override string Mostrar()
         {
             StringBuilder str = new StringBuilder();
 
-            str.Append("Dura: " + this.duracion.ToString());
-            str.Append(" Origen:" + this.nroOrigen.ToString());
-            str.Append(" Destino:" + this.nroDestino.ToString());
+            str.AppendLine(base.Mostrar());
             str.Append(" Cargo:" + this._costo);
             str.Append(" Costo:$" + this.CostoLlamada);
 
