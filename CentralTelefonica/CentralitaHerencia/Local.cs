@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace CentralitaHerencia
 {
-    public class Local:Llamada
+    [Serializable]
+    public class Local : Llamada
     {
         protected float _costo;
+
+        public Local()
+        {
+
+        }
 
         public Local(string origen,float duracion,string destino,float costo)
             :base(duracion,origen,destino)

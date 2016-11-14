@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace CentralitaHerencia
 {
-    public class Centralita
+    [Serializable]
+    [XmlInclude(typeof(Local))]
+    [XmlInclude(typeof(Provincial))]
+    [XmlInclude(typeof(Llamada))]
+    public class Centralita:ISerializable
     {
         private List<Llamada> _listaDeLlamadas;
         protected string _razonSocial;
+        private string _ruta;
 
         public Centralita()
         {
@@ -21,6 +27,7 @@ namespace CentralitaHerencia
             this._razonSocial = nombreEmpresa;
         }
 
+       
         #region getters
         public List<Llamada> Llamadas
         {
@@ -53,6 +60,20 @@ namespace CentralitaHerencia
                 return this.CalcularGanancia(tipoLlamada.Provincial);
             }
         }
+
+        public string RutaDelArchivo
+        {
+            get
+            {
+                return this._ruta;
+            }
+
+            set
+            {
+                this._ruta = value;
+            }
+        }
+
         #endregion
 
 
@@ -78,12 +99,21 @@ namespace CentralitaHerencia
 
         public static Centralita operator+(Centralita central, Llamada nuevaLlamada)
         {
-            if (!(central == nuevaLlamada))
+
+            try
             {
-                central.AgregarLlamada(nuevaLlamada);
+                if (!(central == nuevaLlamada))
+                {
+                    central.AgregarLlamada(nuevaLlamada);
+                }
+                else
+                    throw new Exception();
             }
-            else
-                Console.WriteLine("Esta llamada se ha registrado.");
+            catch (Exception e)
+            {
+
+                throw new CentralitaException("Error la llamada ya se ha registrado.",e.Source,e.TargetSite.ToString(),e);
+            }
 
             return central;
         }
@@ -92,6 +122,9 @@ namespace CentralitaHerencia
         {
             return this.Mostrar();
         }
+
+
+
 
         private string Mostrar()
         {
@@ -176,12 +209,98 @@ namespace CentralitaHerencia
 
         private void AgregarLlamada(Llamada call)
         {
-            this._listaDeLlamadas.Add(call);
+            bool escribir = true;
+
+            try
+            {
+                this._listaDeLlamadas.Add(call);
+                this.GuardarEnArchivo(call, escribir);
+            }
+            catch (Exception e)
+            {
+
+                throw new CentralitaException(e.Message, e.Source, e.TargetSite.ToString(), e);
+            }
         }
 
         public void OrdenarLlamadas()
         {
             this.Llamadas.Sort(CentralitaHerencia.Llamada.OrdenarPorDuracion);
+        }
+
+        public bool DeSerialize()
+        {
+            Centralita central = null;
+            bool succed = false;
+
+            try
+            {
+                using (XmlTextReader lector = new XmlTextReader(RutaDelArchivo))
+                {
+                    XmlSerializer serializador = new XmlSerializer(typeof(Centralita));
+                    central = (Centralita)serializador.Deserialize(lector);
+                    succed = true;
+                }
+            }
+            catch (Exception e)
+            {
+                succed = false;
+                throw new CentralitaException("Error al intentar desserializar el archivo.",e.Source,e.TargetSite.ToString(),e);
+            }
+
+            return succed;
+        }
+
+        public bool Serialize()
+        {
+            bool succed = false;
+
+            try
+            {
+                using (XmlTextWriter escritor = new XmlTextWriter(RutaDelArchivo, Encoding.UTF8))
+                {
+                    XmlSerializer serializador = new XmlSerializer(typeof(Centralita));
+                    serializador.Serialize(escritor,this);
+                    succed = true;
+                }
+            }
+            catch (Exception e)
+            {
+                succed = false;
+                throw new CentralitaException("Error al intentar serializar",e.Source,e.TargetSite.ToString(),e);
+
+            }
+
+            return succed;
+        }
+
+        private bool GuardarEnArchivo(Llamada unaLlamada, bool agrego)
+        {
+            bool succed = false;
+
+            try
+            {
+                using (StreamWriter escritor = new StreamWriter("Centrlita.txt", agrego))
+                {
+                    escritor.WriteLine("<----------------------------------------------------->");
+                    escritor.WriteLine("CALL: ");
+                    escritor.WriteLine(DateTime.Now.ToString());
+
+                    if (unaLlamada.GetType() == typeof(Local))
+                        escritor.WriteLine(((Local)unaLlamada).ToString());
+                    else if (unaLlamada.GetType() == typeof(Provincial))
+                        escritor.WriteLine(((Provincial)unaLlamada).ToString());
+                    succed = true;
+                }
+
+            }
+            catch (Exception e)
+            {
+                succed = false;
+                throw new CentralitaException("Error al intentar escribir en archivo", e.Source, e.TargetSite.ToString(), e);
+            }
+
+            return succed;
         }
     }
 }

@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CentralitaHerencia
 {
+    [Serializable]
+    [XmlInclude(typeof(Local))]
+    [XmlInclude(typeof(Provincial))]
     public abstract class Llamada
     {
         protected float _duracion;
         protected string _nroDestino;
         protected string _nroOrigen;
+
+        public Llamada()
+        {
+
+        }
 
         public Llamada(float duracion,string origen,string destino)
         {
@@ -70,7 +79,6 @@ namespace CentralitaHerencia
         {
             return !(l1 == l2);
         }
-
 
         public static int OrdenarPorDuracion(Llamada firstCall, Llamada secondCall)
         {

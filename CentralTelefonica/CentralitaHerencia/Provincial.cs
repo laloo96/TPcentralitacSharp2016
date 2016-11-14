@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace CentralitaHerencia
 {
+    [Serializable]
     public class Provincial:Llamada
     {
         protected eFranja _franjaHoraria;
+
+        public Provincial()
+        {
+
+        }
 
         public Provincial(string origen, eFranja miFranja, float duracion, string destino)
             :base(duracion,origen,destino)
