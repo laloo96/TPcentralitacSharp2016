@@ -11,6 +11,9 @@ namespace ConsoleEventsProject
         static void Main(string[] args)
         {
             miClase personita = new miClase();
+            string minombre = "claudio";
+
+            minombre.miMetodo();
          
             personita.noEsLaEdad += Program.juna;
 
