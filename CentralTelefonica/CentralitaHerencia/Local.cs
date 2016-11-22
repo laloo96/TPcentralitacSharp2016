@@ -9,7 +9,13 @@ namespace CentralitaHerencia
     [Serializable]
     public class Local : Llamada
     {
-        protected float _costo;
+        private float _costo;
+
+        protected float Costo
+        {
+            get { return _costo; }
+            set { _costo = value; }
+        }
 
         public Local()
         {

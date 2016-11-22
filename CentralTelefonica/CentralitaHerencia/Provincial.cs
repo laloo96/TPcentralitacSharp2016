@@ -9,7 +9,13 @@ namespace CentralitaHerencia
     [Serializable]
     public class Provincial:Llamada
     {
-        protected eFranja _franjaHoraria;
+        private eFranja _franjaHoraria;
+
+        protected eFranja FranjaHoraria
+        {
+            get { return _franjaHoraria; }
+            set { _franjaHoraria = value; }
+        }
 
         public Provincial()
         {

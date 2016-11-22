@@ -123,9 +123,6 @@ namespace CentralitaHerencia
             return this.Mostrar();
         }
 
-
-
-
         private string Mostrar()
         {
             Local loc;
@@ -218,7 +215,6 @@ namespace CentralitaHerencia
             }
             catch (Exception e)
             {
-
                 throw new CentralitaException(e.Message, e.Source, e.TargetSite.ToString(), e);
             }
         }
@@ -268,7 +264,6 @@ namespace CentralitaHerencia
             {
                 succed = false;
                 throw new CentralitaException("Error al intentar serializar",e.Source,e.TargetSite.ToString(),e);
-
             }
 
             return succed;
