@@ -10,7 +10,6 @@ namespace CentralitaHerencia
     [Serializable]
     [XmlInclude(typeof(Local))]
     [XmlInclude(typeof(Provincial))]
-    [XmlInclude(typeof(Llamada))]
     public class Centralita:ISerializable
     {
         private List<Llamada> _listaDeLlamadas;
@@ -43,6 +42,7 @@ namespace CentralitaHerencia
             {
                 return this.CalcularGanancia(tipoLlamada.Todas);
             }
+            set { }
         }
 
         public float GananciaPorLocal
@@ -51,6 +51,7 @@ namespace CentralitaHerencia
             {
                 return this.CalcularGanancia(tipoLlamada.Local);
             }
+            set { }
         }
 
         public float GananciaPorProvincial
@@ -59,6 +60,7 @@ namespace CentralitaHerencia
             {
                 return this.CalcularGanancia(tipoLlamada.Provincial);
             }
+            set { }
         }
 
         public string RutaDelArchivo

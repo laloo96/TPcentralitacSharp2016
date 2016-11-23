@@ -37,7 +37,9 @@ namespace CentralitaHerencia
             {
                 return this.CalcularCosto();
             }
+            set { }
         }
+
         /// <summary>
         /// Determina si el obj es de l mismo tipo que la instancia actual.
         /// </summary>
